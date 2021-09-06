@@ -17,8 +17,11 @@ To run all the tests:
 ```
 or to run a specific class of tests:
 ```
-./gradlew clean test --tests={name of desired test class} 
-e.g. ./gradlew clean test --tests=RestAssuredTests
+./gradlew clean test --tests={name of desired test class}
+```
+e.g.: 
+```
+./gradlew clean test --tests=RestAssuredTests
 ```
 
 _______________________________________________________________________________________
@@ -41,9 +44,18 @@ To run all the tests:
 ```
 ./gradlew clean test
 ```
-or you can run a predefined build task with the tests:
+
+By default, the tests are run in the Chrome browser (if you have it) and in UI mode (non-headless) but you can specify the desired browser (should be supported by Selenium WebDriver) via the following parameter:
 ```
-./gradlew cucumber
+-Dselenide.browser={desired browser}
+```
+e.g.:
+```
+./gradlew clean test -Dselenide.browser=safari
+```
+The same for the browser Headless mode, it can be enbled via the following parameter:
+```
+-Dselenide.headless=true
 ```
 
 
