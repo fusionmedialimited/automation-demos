@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.8.1'
+}
+
+group 'tst.demo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+def allureVersion = "2.14.0",
+    selenideVersion = '5.24.0',
+    testNG = "7.4.0"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+allure {
+    version = allureVersion
+    autoconfigure = true
+    aspectjweaver = true
+    allureJavaVersion = allureVersion
+    configuration = "testImplementation"
+
+    clean = true
+
+
+    useTestNG {
+        version = allureVersion
+    }
+}
+
+dependencies {
+    implementation (
+            "io.qameta.allure:allure-testng:$allureVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "com.codeborne:selenide:$selenideVersion",
+            "org.testng:testng:$testNG",
+            "org.slf4j:slf4j-simple:1.7.32",
+            "org.aspectj:aspectjweaver:1.9.7",
+            "com.github.automatedowl:allure-environment-writer:1.0.0"
+    )
+}
+
+test {
+    useTestNG(){
+        suites 'src/test/resources/testng.xml'
+    }
+
+    systemProperties(System.getProperties())
+
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
