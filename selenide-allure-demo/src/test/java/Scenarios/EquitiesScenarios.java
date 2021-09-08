@@ -73,7 +73,8 @@ public class EquitiesScenarios extends TestBase {
                     "The currentPrice value: " + currentPrice + " is not within the expected range: " + weekRange);
         });
 
-        attachBrowserConsoleLogs();
+        if (System.getProperty("selenide.browser").equals("chrome"))
+            attachBrowserConsoleLogs();
     }
 
 
@@ -129,6 +130,9 @@ public class EquitiesScenarios extends TestBase {
             equitiesPage.companyProfileTable.shouldBe(visible, Duration.ofSeconds(5));
             equitiesPage.companyProfileDescription.shouldBe(visible, Duration.ofSeconds(5));
         });
+
+        if (System.getProperty("selenide.browser").equals("chrome"))
+            attachBrowserConsoleLogs();
     }
 
 
