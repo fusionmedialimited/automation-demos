@@ -2,7 +2,6 @@ package Scenarios;
 
 import Infrastructure.TestBase;
 import PageObject.EquitiesInstrumentPage;
-import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.testng.TextReport;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
@@ -73,7 +72,7 @@ public class EquitiesScenarios extends TestBase {
                     "The currentPrice value: " + currentPrice + " is not within the expected range: " + weekRange);
         });
 
-        if (System.getProperty("selenide.browser").equals("chrome"))
+        if (browser.equals("chrome"))
             attachBrowserConsoleLogs();
     }
 
@@ -131,7 +130,7 @@ public class EquitiesScenarios extends TestBase {
             equitiesPage.companyProfileDescription.shouldBe(visible, Duration.ofSeconds(5));
         });
 
-        if (System.getProperty("selenide.browser").equals("chrome"))
+        if (browser.equals("chrome"))
             attachBrowserConsoleLogs();
     }
 

@@ -22,11 +22,12 @@ import static java.lang.System.setProperty;
 @Listeners({TextReport.class})
 public class TestBase {
 
+    public String browser = System.getProperty("selenide.browser", "chrome");
+    boolean headless = parseBoolean(System.getProperty("selenide.headless", "false"));
+
     @BeforeSuite
     public void launchBrowserAndOpenSite() {
 
-        String browser = System.getProperty("selenide.browser", "chrome");
-        boolean headless = parseBoolean(System.getProperty("selenide.headless", "false"));
 
         Configuration.browser = browser;
 
@@ -37,9 +38,12 @@ public class TestBase {
         Configuration.fastSetValue = true;
         Configuration.baseUrl = host;
         Configuration.headless = headless;
+
+        if (headless)
+            Configuration.browserSize = "1920x1080";
+
         Configuration.pageLoadTimeout = 60000; // wait for the page to load up to 1 min
-        //Configuration.browserSize = "1920x1080";
-        Configuration.reportsFolder = "reports";
+        Configuration.reportsFolder = "build/reports";
 
         setProperty("java.util.logging.SimpleFormatter.format", "%1$tT %4$s %5$s%6$s%n");
 
@@ -52,7 +56,6 @@ public class TestBase {
                 Selenide.open(host)
         );
 
-        //Capabilities cap = ((EventFiringWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
         Capabilities cap = ((RemoteWebDriver) WebDriverRunner.getWebDriver()).getCapabilities();
 
         allureEnvironmentWriter(
