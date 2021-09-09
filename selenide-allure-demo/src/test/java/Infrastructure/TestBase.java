@@ -34,13 +34,17 @@ public class TestBase {
         String host = "https://www.investing.com";
 
         Configuration.holdBrowserOpen = false;
-        Configuration.startMaximized = true;
+
         Configuration.fastSetValue = true;
         Configuration.baseUrl = host;
         Configuration.headless = headless;
 
-        if (headless)
+        if (headless) {
+            Configuration.startMaximized = false;
             Configuration.browserSize = "1920x1080";
+        } else {
+            Configuration.startMaximized = true;
+        }
 
         Configuration.pageLoadTimeout = 60000; // wait for the page to load up to 1 min
         Configuration.reportsFolder = "build/reports";
