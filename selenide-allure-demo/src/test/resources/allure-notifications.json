@@ -1,0 +1,44 @@
+{
+  "app": {
+    "bot": {
+      "token": "1952879985:AAFKqWH7x96611Wy9mXkuuGtYghh6MitifQ",
+      "chat": "-132684870",
+      "replyTo": "sergei.b@investing.com"
+    },
+    "base": {
+      "lang": "en",
+      "messenger": "telegram",
+      "allureFolder": "./selenide-allure-demo",
+      "allureLinkPath": "allure",
+      "chart": true,
+      "chartName": "Latest report",
+      "project": "selenide-allure-demo"
+    },
+    "mail": {
+      "host": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "enableSSL": false,
+      "from": "",
+      "recipient": ""
+    },
+    "mattermost": {
+      "url": ""
+    },
+    "proxy": {
+      "host": "",
+      "port": 0,
+      "username": "",
+      "password": ""
+    },
+    "skype": {
+      "appId": "",
+      "appSecret": "",
+      "serviceUrl": "",
+      "conversationId": "",
+      "botId": "",
+      "botName": ""
+    }
+  }
+}
