@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '2.8.1'
 }
 
 group 'tst.demo'
@@ -15,23 +16,34 @@ java {
 }
 
 ext{
-    selenideVersion = '5.24.0'
-    junitVersion = "5.7.2"
+    selenideVersion = '5.24.3'
+    testngVersion = "7.4.0"
     cucumberVersion = "6.11.0"
+    allureVersion = "2.15.0"
 }
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    version = allureVersion
+    configuration = "testImplementation"
+    allureJavaVersion = allureVersion
+
+    clean = true
+}
+
+
 
 dependencies {
     implementation (
-            "org.junit.jupiter:junit-jupiter-api:$junitVersion",
-            "org.junit.jupiter:junit-jupiter-params:$junitVersion",
+            "org.testng:testng:$testngVersion",
             "com.codeborne:selenide:$selenideVersion",
             "io.cucumber:cucumber-java:$cucumberVersion",
-            "io.cucumber:cucumber-junit:$cucumberVersion",
+            "io.cucumber:cucumber-testng:$cucumberVersion",
             "io.cucumber:cucumber-picocontainer:$cucumberVersion",
-            "org.junit.vintage:junit-vintage-engine:${junitVersion}",
+            "io.qameta.allure:allure-cucumber6-jvm:$allureVersion",
             "org.slf4j:slf4j-simple:1.7.32"
     )
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
 }
 
 configurations {
@@ -61,8 +73,17 @@ task cucumber() {
 //    main = 'io.cucumber.core.cli.Main'
 //}
 
+//configurations {
+//    testCompile
+//}
+
+
 test {
-    useJUnitPlatform()
+    useTestNG() {
+        testLogging.showStandardStreams = true
+        useDefaultListeners = true
+        reports.html.enabled(false)
+    }
 
 //    testLogging {
 //        events TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED

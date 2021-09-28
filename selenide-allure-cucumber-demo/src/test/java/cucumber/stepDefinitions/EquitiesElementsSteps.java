@@ -1,17 +1,17 @@
 package cucumber.stepDefinitions;
 
 import com.codeborne.selenide.testng.annotations.Report;
+import cucumber.pages.EquityInstrumentPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pageObjects.EquityInstrumentPage;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 
-@Report
+//@Report
 public class EquitiesElementsSteps {
     //@Inject
     EquityInstrumentPage equityInstrumentPage = new EquityInstrumentPage();
@@ -55,6 +55,6 @@ public class EquitiesElementsSteps {
         equityInstrumentPage.trendingStocksTbl.shouldBe(visible, Duration.ofSeconds(5));
         equityInstrumentPage.companyProfileBlock.shouldBe(visible, Duration.ofSeconds(5));
         equityInstrumentPage.companyProfileTable.shouldBe(visible, Duration.ofSeconds(5));
-        equityInstrumentPage.companyProfileDescription.shouldBe(visible, Duration.ofSeconds(5));
+        equityInstrumentPage.companyProfileDescription.shouldNotBe(visible, Duration.ofSeconds(5));
     }
 }

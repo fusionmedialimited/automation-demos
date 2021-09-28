@@ -2,9 +2,13 @@ package cucumber.hooks;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.testng.TextReport;
+import org.testng.annotations.Listeners;
 
 import static java.lang.Boolean.parseBoolean;
 
+
+@Listeners({TextReport.class})
 public class SelenideConfiguration {
     public void getBrowser(){
         String browser = System.getProperty("selenide.browser", "chrome");

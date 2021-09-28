@@ -1,9 +1,8 @@
-package cucumber;
-
-
+import com.codeborne.selenide.testng.TextReport;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 
 
 @CucumberOptions(
@@ -18,16 +17,17 @@ import org.testng.annotations.DataProvider;
 //                "json:reports/Cucumber.json"
         },
         features = {"src/test/resources/features"},
-        monochrome =true,
-        publish = false,
-        tags = "@REFA-2711"
-        )
+        monochrome =false,
+        publish = false
+        //tags = "@REFA-2711"
+)
 
+//@Listeners({TextReport.class})
 public class CucumberRunner extends AbstractTestNGCucumberTests {
 
-        @Override
-        @DataProvider(parallel = false)
-        public Object[][] scenarios() {
-                return super.scenarios();
-        }
+    @Override
+    @DataProvider(parallel = false)
+    public Object[][] scenarios() {
+        return super.scenarios();
+    }
 }
