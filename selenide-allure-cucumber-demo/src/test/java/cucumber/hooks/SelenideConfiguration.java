@@ -63,6 +63,7 @@ public class SelenideConfiguration {
             props.setProperty("Browser.Version", cap.getVersion());
             props.setProperty("Browser Headless mode", String.valueOf(headless));
             props.setProperty("HOST", host);
+            props.setProperty("Edition", "WWW");
 
             props.store(fos, "See https://docs.qameta.io/allure/#_environment");
             fos.close();
