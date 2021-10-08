@@ -11,6 +11,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.Listeners;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
@@ -58,7 +59,10 @@ public class SelenideConfiguration {
 
         try {
             Properties props = new Properties();
-            FileOutputStream fos = new FileOutputStream(path + "/environment.properties");
+            File allureEnvFile = new File("environment.properties");
+            allureEnvFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(path + "/environment.properties", false);
+
             props.setProperty("Browser", browser);
             props.setProperty("Browser.Version", cap.getVersion());
             props.setProperty("Browser Headless mode", String.valueOf(headless));
