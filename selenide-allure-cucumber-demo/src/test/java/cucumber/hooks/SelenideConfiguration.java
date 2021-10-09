@@ -13,6 +13,7 @@ import org.testng.annotations.Listeners;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 //import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
@@ -59,9 +60,13 @@ public class SelenideConfiguration {
 
         try {
             Properties props = new Properties();
-            File allureEnvFile = new File("environment.properties");
-            allureEnvFile.createNewFile();
-            FileOutputStream fos = new FileOutputStream(path + "/environment.properties", false);
+            File allureEnvFile = new File(path + "/environment.properties");
+
+            if (!allureEnvFile.exists()) {
+                allureEnvFile.createNewFile();
+            }
+
+            FileOutputStream fos = new FileOutputStream(allureEnvFile, false);
 
             props.setProperty("Browser", browser);
             props.setProperty("Browser.Version", cap.getVersion());
@@ -72,7 +77,7 @@ public class SelenideConfiguration {
             props.store(fos, "See https://docs.qameta.io/allure/#_environment");
             fos.close();
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("IO problem when writing allure properties file");
             e.printStackTrace();
         }
