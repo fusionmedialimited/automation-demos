@@ -8,11 +8,15 @@ import com.codeborne.selenide.testng.TextReport;
 import com.google.common.collect.ImmutableMap;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
+import static Infrastructure.AllureAttachments.addVideo;
+import static Infrastructure.AllureAttachments.attachBrowserConsoleLogs;
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 import static io.qameta.allure.Allure.step;
 import static java.lang.Boolean.parseBoolean;
@@ -27,8 +31,16 @@ public class TestBase {
 
     @BeforeSuite
     public void launchBrowserAndOpenSite() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", true);
+        capabilities.setBrowserName("chrome");
+        capabilities.setVersion("94.0");
+        Configuration.browserCapabilities = capabilities;
 
 
+        Configuration.remote = "http://172.16.0.175:4444/wd/hub/";
         Configuration.browser = browser;
 
         String host = "https://www.investing.com";
@@ -68,8 +80,17 @@ public class TestBase {
                         .put("Browser.Version", cap.getVersion())
                         .put("Browser Headless mode", String.valueOf(headless))
                         .put("HOST", host)
+                        .put("OS", System.getProperty("os.name").toLowerCase())
                         .build(), System.getProperty("user.dir")
                         + "/build/allure-results/");
+    }
+
+    @AfterTest
+    public void afterTest() {
+        if (browser.equals("chrome"))
+            attachBrowserConsoleLogs();
+
+        addVideo();
     }
 
     @AfterSuite
@@ -77,4 +98,5 @@ public class TestBase {
         SelenideLogger.removeListener("AllureSelenide");
         WebDriverRunner.closeWebDriver();
     }
+
 }

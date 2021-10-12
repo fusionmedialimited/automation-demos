@@ -2,12 +2,11 @@ package Scenarios;
 
 import Infrastructure.TestBase;
 import PageObject.EquitiesInstrumentPage;
-import com.codeborne.selenide.testng.TextReport;
+import com.codeborne.selenide.testng.annotations.Report;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -19,7 +18,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.qameta.allure.Allure.step;
 import static org.testng.Assert.*;
 
-@Listeners({TextReport.class})
+@Report
 public class EquitiesScenarios extends TestBase {
 
     EquitiesInstrumentPage equitiesPage = new EquitiesInstrumentPage();
@@ -69,11 +68,9 @@ public class EquitiesScenarios extends TestBase {
             double endWeeksValue = Double.parseDouble(values[1]);
 
             assertTrue(startWeeksValue < currentPrice && currentPrice < endWeeksValue,
-                    "The currentPrice value: " + currentPrice + " is not within the expected range: " + weekRange);
+                    "The currentPrice value: " + currentPrice + " " +
+                            "is not within the expected range: " + weekRange);
         });
-
-        if (browser.equals("chrome"))
-            attachBrowserConsoleLogs();
     }
 
 
@@ -129,10 +126,6 @@ public class EquitiesScenarios extends TestBase {
             equitiesPage.companyProfileTable.shouldBe(visible, Duration.ofSeconds(5));
             equitiesPage.companyProfileDescription.shouldBe(visible, Duration.ofSeconds(5));
         });
-
-        if (browser.equals("chrome"))
-            attachBrowserConsoleLogs();
     }
-
 
 }
